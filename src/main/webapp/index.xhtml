@@ -9,11 +9,45 @@
 
     <ui:define name="content">
         <h:form>
-            <h:inputText value="#{cobrarImpuestoBaseBean.name}"/>
-            <h:commandButton action="#{cobrarImpuestoBaseBean.darMiNombre()}"/>
+            <b>Contribuyente</b>
+            <br/>
+            <br/>
+
+            Cedula:<h:selectOneMenu value="#{cobrarImpuestoBaseBean.idIPersona}">
+                <f:selectItems value="#{cobrarImpuestoBaseBean.cedulas}"/>
+            </h:selectOneMenu><h:inputText value="#{cobrarImpuestoBaseBean.idIPersona}"/><br/>
+            Nombre: <h:inputText value="#{cobrarImpuestoBaseBean.nombre}"/><br/>
+            Apellido: <h:inputText value="#{cobrarImpuestoBaseBean.apellido}"/><br/>
+
+
+
+            <br/>
+            <br/>
+            <h:commandButton action="#{cobrarImpuestoBaseBean.calcularImpuesto()}" value="Actualizar"/>
+
+            <br/>
+            <br/>
+
+            <b>Impuesto Base</b>
+            <br/>
+            <br/>
+            Codigo:<h:inputText value="#{cobrarImpuestoBaseBean.idImpuesto}"/><br/>
+            Año Gravable:<h:selectOneMenu value="#{cobrarImpuestoBaseBean.anioGravable}">
+                <f:selectItems value="#{cobrarImpuestoBaseBean.anios}"/>
+            </h:selectOneMenu><br/><br/>
+            Cálculo:<br/>
+            Base: <h:inputText value="#{cobrarImpuestoBaseBean.base}"/><br/>
+            Descuento: <h:inputText value="#{cobrarImpuestoBaseBean.descuento}"/><br/>
+            Total: <h:outputText value="#{cobrarImpuestoBaseBean.total}"/>
+
+            <h:commandButton action="#{cobrarImpuestoBaseBean.calcularImpuesto()}" value="Calcular"/>
+            <br/>
+            <br/>
+            <h:commandButton action="#{cobrarImpuestoBaseBean.calcularImpuesto()}" value="Pagar"/>
+
         </h:form>
-        
-        <h:outputText value="#{cobrarImpuestoBaseBean.mostrar}" escape = "false"/>
+
+
     </ui:define>
- 
+
 </ui:composition>
