@@ -12,17 +12,17 @@ package co.edu.uniandes.impuestobase.objects;
  */
 public class PersonaObject {
        //BASE
-    private Long idIPersona;
+    private String idIPersona;
  
     //PROPIEDADES
     private String nombre;
     private String apellido;
 
-    public Long getIdIPersona() {
+    public String getIdIPersona() {
         return idIPersona;
     }
 
-    public void setIdIPersona(Long idIPersona) {
+    public void setIdIPersona(String idIPersona) {
         this.idIPersona = idIPersona;
     }
 
