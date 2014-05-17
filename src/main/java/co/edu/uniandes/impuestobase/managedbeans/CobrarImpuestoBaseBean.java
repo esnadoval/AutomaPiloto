@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.impuestobase.managedbeans;
 
+import co.edu.uniandes.impuestobase.dao.ImpuestoBaseDAO;
 import co.edu.uniandes.impuestobase.objects.ImpuestoObject;
 import co.edu.uniandes.impuestobase.objects.PersonaObject;
 import java.util.ArrayList;
@@ -27,32 +28,35 @@ public class CobrarImpuestoBaseBean {
     private static final long serialVersionUID = 1L;
 
     private List<String> anios;
-     private List<String> cedulas;
-     
-     
-     private  ImpuestoObject impuesto;
-     private PersonaObject persona;
+    private List<String> cedulas;
+
 //BASE
     private Long idImpuesto;
     private String anioGravable;
     private boolean pagado;
-    private Double total= 0.0;
-    //PROPIEDADES
+    private Double total = 0.0;
+    //PROPIEDADES Impuesto
     private String placa;
-    //CALCULOS
+    //CALCULOS Impuesto
     private Double base = 0.0;
-    private Double descuento= 0.0;
-    //BASE
+    private Double descuento = 0.0;
+    //BASE Persona
     private String idIPersona;
-
-    //PROPIEDADES
+    private String idIPersonaSel;
+    //PROPIEDADES Persona
     private String nombre;
     private String apellido;
 
+    private ImpuestoBaseDAO dao;
+
     @PostConstruct
     public void init() {
+        dao = new ImpuestoBaseDAO();
+        dao.inicializarConexion();
+        dao.crearTablas();
+        dao.cerrarConexion();
         Random r = new Random();
-        idImpuesto = 0 +r.nextLong() * 999999;
+        idImpuesto = 0 + r.nextLong() * 999999;
         anios = new ArrayList<String>();
         anios.add("2013");
         anios.add("2014");
@@ -61,29 +65,69 @@ public class CobrarImpuestoBaseBean {
         anios.add("2018");
         anioGravable = "2014";
         obtenerPersonas();
-        impuesto = new ImpuestoObject();
-        persona = new PersonaObject();
+
     }
 
-    public void obtenerPersonas(){
-        cedulas = new ArrayList<String>();
-        cedulas.add("123123");
-        cedulas.add("9809080");
-        cedulas.add("45654");
+    public void obtenerPersonas() {
+        dao.inicializarConexion();
+        cedulas = dao.darCedulas();
+        dao.cerrarConexion();
+        if(!cedulas.isEmpty()){
+        idIPersonaSel = cedulas.get(0);
+        }
     }
-    public void obtenerPersona(){
-        
+
+    public void obtenerPersona() {
+        dao.inicializarConexion();
+        PersonaObject p = dao.darInfoPersona(idIPersonaSel);
+        dao.cerrarConexion();
+        idIPersona = p.getIdIPersona();
+        //Dinamicos
+        nombre = p.getNombre();
+        apellido = p.getApellido();
     }
+
     public void calcularImpuesto() {
         total = (5 + base - descuento);
 
     }
-      public void pagarImpuesto() {
-        total = (5 + base - descuento);
 
+    public void pagarImpuesto() {
+        PersonaObject p = new PersonaObject();
+        p.setIdIPersona(idIPersona);
+        p.setNombre(nombre);
+        p.setApellido(apellido);
+        dao.inicializarConexion();
+        if (dao.guardarPersona(p) == false) {
+            dao.actualizarPersona(p);
+        }
+        ImpuestoObject i = new ImpuestoObject();
+        //obligatorios
+        i.setIdImpuesto(idImpuesto);
+        i.setTotal(total);
+        i.setPagado(true);
+        i.setAnioGravable(anioGravable);
+        //atributos adicionales
+        i.setPlaca(placa);
+        //elementos de calculo
+        i.setBase(base);
+        i.setDescuento(descuento);
+
+        dao.guardarImpuesto(i, p.getIdIPersona());
+        dao.pagarImpuesto(i.getIdImpuesto());
+        dao.cerrarConexion();
     }
+
     public void actualizarPersonas() {
-        total = (5 + base - descuento);
+        PersonaObject p = new PersonaObject();
+        p.setIdIPersona(idIPersona);
+        p.setNombre(nombre);
+        p.setApellido(apellido);
+        dao.inicializarConexion();
+        if (!dao.actualizarPersona(p)) {
+            dao.guardarPersona(p);
+        }
+        dao.cerrarConexion();
 
     }
 
@@ -181,6 +225,10 @@ public class CobrarImpuestoBaseBean {
 
     public void setCedulas(List<String> cedulas) {
         this.cedulas = cedulas;
+    }
+
+    public String getIdIPersonaSel() {
+        return idIPersonaSel;
     }
 
 }
