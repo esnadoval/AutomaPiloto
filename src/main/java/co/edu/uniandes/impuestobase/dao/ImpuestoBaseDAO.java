@@ -89,7 +89,7 @@ public class ImpuestoBaseDAO {
             String sql = "INSERT INTO IMPUESTOS VALUES(" + impto.getIdImpuesto() + ",'" + impto.getAnioGravable() + "'," + impto.getBase() + "," + impto.getDescuento() + ",'" + impto.getPlaca() + "'," + impto.getTotal() + ",0)";
             Statement st = conexion.createStatement();
             st.executeUpdate(sql);
-            String sql2 = "INSERT INTO IMP_USUARIO VALUES('" + cc + "'," + impto.getIdImpuesto() + ")";
+            String sql2 = "INSERT INTO IMP_USUARIOS VALUES(" + impto.getIdImpuesto() + ",'" + cc + "')";
             st.executeUpdate(sql2);
             st.close();
             return true;
@@ -125,10 +125,10 @@ public class ImpuestoBaseDAO {
         }
     }
 
-    public ArrayList<ImpuestoObject> darImpuestosUsuario(String cc) {
+    public ArrayList<ImpuestoObject> darImpuestosUsuario(String cc, String anio) {
         ArrayList<ImpuestoObject> rta = new ArrayList<ImpuestoObject>();
         try {
-            String sql = "SELECT * FROM IMPUESTOS JOIN IMP_USUARIOS ON IMPUESTOS.id=IMP_USUARIOS.idimpuesto WHERE IMP_USUARIOS.cc='" + cc + "'";
+            String sql = "SELECT * FROM IMPUESTOS JOIN IMP_USUARIOS ON IMPUESTOS.id=IMP_USUARIOS.idimpuesto WHERE IMP_USUARIOS.cc='" + cc + "' and IMPUESTOS.aniogravable='" + anio + "'";
             Statement st = conexion.createStatement();
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
@@ -142,9 +142,12 @@ public class ImpuestoBaseDAO {
                 } else {
                     imp.setPagado(false);
                 }
-                imp.setPlaca(rs.getString("placa"));
+                
                 imp.setTotal(rs.getDouble("total"));
 
+                //Variables
+                imp.setPlaca(rs.getString("placa"));
+                
                 rta.add(imp);
             }
             rs.close();
@@ -153,6 +156,40 @@ public class ImpuestoBaseDAO {
             ex.printStackTrace();
         }
         return rta;
+    }
+
+    public ImpuestoObject darImpuesto(Long id) {
+
+        try {
+            String sql = "SELECT * FROM IMPUESTOS WHERE IMPUESTOS.id= " + id + "";
+            Statement st = conexion.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                ImpuestoObject imp = new ImpuestoObject();
+                imp.setIdImpuesto(rs.getLong("id"));
+                imp.setAnioGravable(rs.getString("aniogravable"));
+                imp.setBase(rs.getDouble("base"));
+                imp.setDescuento(rs.getDouble("descuento"));
+                if (rs.getInt("pagado") == 1) {
+                    imp.setPagado(true);
+                } else {
+                    imp.setPagado(false);
+                }
+                imp.setTotal(rs.getDouble("total"));
+                //Variables
+                imp.setPlaca(rs.getString("placa"));
+                rs.close();
+                st.close();
+                return imp;
+
+            }
+            rs.close();
+            st.close();
+            return null;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
 
     public ArrayList<ImpuestoObject> darImpuestosAnioGravable(String anio) {

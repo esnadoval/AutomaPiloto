@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="template.jsp"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+
+         
+            <h:messages style="  
+             right:0px; 
+               
+             background:#FFFFFF;  
+             border:2px solid #FF0000;  
+             border-radius: 15px;
+             position: fixed;
+             text-align:left;
+             color:#FF0000;
+             top: 1em;
+             right: 1em;align: left;
+             z-index:2147483647"  globalOnly="true" />
+        
+        <img id="top" src="public/top.png" alt=""/>
+        <div id="form_container">
+
+            <h1>Pago en Línea del Impuesto Base</h1>
+
+            <h:form styleClass="appnitro">
+
+                <ul >
+
+                    <li class="section_break">
+                        <h2>Datos del Contribuyente</h2>
+                        <p></p>
+                    </li>		
+                    <li id="li_4" align = "center">
+                        <label class="description" for="element_4">Ya registró su contribuyente? Seleccionelo aquí: </label>
+                        <div >
+                            <h:selectOneMenu styleClass="element select medium" value="#{cobrarImpuestoBaseBean.idIPersonaSel}">
+                                <f:selectItems value="#{cobrarImpuestoBaseBean.cedulas}"/>
+                            </h:selectOneMenu> <br/>
+                            <h:commandLink action="#{cobrarImpuestoBaseBean.obtenerPersona()}" value="Llenar Datos"/>
+
+                        </div> 
+                    </li>		
+                    <li id="li_1" >
+                        <label class="description" for="element_1">Cédula </label>
+                        <div>
+                            <h:inputText styleClass="element text medium" value="#{cobrarImpuestoBaseBean.idIPersona}"/>
+
+
+
+
+
+
+                        </div> 
+                    </li>		
+                    <li id="li_2" >
+                        <label class="description" for="element_2">Nombre </label>
+                        <div>
+                            <h:inputText styleClass="element text medium" value="#{cobrarImpuestoBaseBean.nombre}"/>
+
+                        </div> 
+                    </li>		
+                    <li id="li_3" >
+                        <label class="description" for="element_3">Apellido </label>
+                        <div>
+
+                            <h:inputText styleClass="element text medium" value="#{cobrarImpuestoBaseBean.apellido}"/>
+                        </div> 
+                    </li>
+                    <li id="li_33" >
+                        
+                        <div>
+
+                             <h:commandLink action="#{cobrarImpuestoBaseBean.actualizarPersonas()}" value="Actualizar Datos"/>
+                        </div> 
+                    </li>
+                   
+                    <li class="section_break">
+                        <h2>Detalles del Impuesto Base</h2>
+                        <p></p>
+                    </li>		
+                    <li id="li_7" >
+                        <label class="description" for="element_7">Código </label>
+                        <div>
+                            <h:inputText styleClass="element text medium" value="#{cobrarImpuestoBaseBean.idImpuesto}"/>
+
+
+
+                        </div> 
+                    </li>		
+                    <li id="li_8" >
+                        <label class="description" for="element_8">Año Gravable </label>
+                        <div>
+                            <h:selectOneMenu styleClass="element select medium" value="#{cobrarImpuestoBaseBean.anioGravable}">
+                                <f:selectItems value="#{cobrarImpuestoBaseBean.anios}"/>
+                            </h:selectOneMenu>
+                        </div> 
+                    </li>
+                    <li id="li_22" >
+                        <label class="description" for="element_2">Placa </label>
+                        <div>
+                            <h:inputText styleClass="element text medium" value="#{cobrarImpuestoBaseBean.placa}"/>
+
+                        </div> 
+                    </li>
+                    <li id="li_9" >
+                        <label class="description" for="element_9">Total a Pagar: </label>
+                        <div>
+                            <table>
+                                <tr><td>Base:</td><td align="center"><h:inputText styleClass="element text medium" value="#{cobrarImpuestoBaseBean.base}"/></td><td></td></tr>
+                                <tr><td>Descuento:</td><td align="center"><h:inputText  styleClass="element text medium" value="#{cobrarImpuestoBaseBean.descuento}"/></td><td></td></tr>
+                                <tr><td><b>Total:</b></td><td align="center"><b>$<h:outputText value="#{cobrarImpuestoBaseBean.total}"/></b></td><td><h:commandLink action="#{cobrarImpuestoBaseBean.calcularImpuesto()}" value="Calcular"/></td></tr>
+
+
+                            </table>
+
+
+
+
+                        </div> 
+                    </li>		
+
+
+                    <li class="buttons">
+                        <h:commandButton action="#{cobrarImpuestoBaseBean.pagarImpuesto()}" value="Pagar En Línea"/>
+                    </li>
+                </ul>
+
+            </h:form>	
+            <div align="center">  <br/><br/>
+                <a href="index.jsf">Volver al Inicio</a> <br/><br/></div>
+        </div>
+        <img id="bottom" src="public/bottom.png" alt=""/>
+
+
+    </ui:define>
+
+</ui:composition>

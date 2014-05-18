@@ -3,17 +3,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <head>
-    
-       
-       <link rel="stylesheet" type="text/css" href="public/view.css" media="all"/>
-       <script type="text/javascript" src="public/view.js"></script>
+        <link rel="stylesheet" type="text/css" href="public/view.css" media="all"/>
+        <script type="text/javascript" src="public/view.js"></script>
+        <title>Aplicacion del Impuesto Base</title>
     </head>
 
     <body>
 
-        <div id="header">
+        <div id="header" class="headr">
             <ui:insert name="header">
-                Header
+                <table><tr><td><img src="public/money.png" width="72px" height="72px"/></td><td>Impuesto Base</td></tr></table>
+                
+                
             </ui:insert>
         </div>
 
@@ -24,7 +25,7 @@
 
         <div id="footer">
             <ui:insert name="footer">
-                Footer
+                Generador de Aplicaciones de Impuesto
             </ui:insert>
         </div>
 

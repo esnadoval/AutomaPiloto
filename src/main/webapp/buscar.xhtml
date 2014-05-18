@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="template.jsp"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+
+         
+            
+        
+        <img id="top" src="public/top.png" alt=""/>
+        <div id="form_container">
+
+            <h1>Buscar Comprobante de Pago</h1>
+
+            <h:form styleClass="appnitro">
+
+                <ul >
+
+                    <li class="section_break">
+                        <h2>Búsqueda</h2>
+                        <p></p>
+                    </li>		
+                    <li id="li_1" >
+                        <label class="description" for="element_1">Cédula de Contribuyente</label>
+                        <div>
+                            <h:inputText styleClass="element text medium" value="#{buscarImpuestoBaseBean.idIPersona}"/>
+
+                        </div> 
+                    </li>
+                    <li id="li_8" >
+                        <label class="description" for="element_8">Año Gravable </label>
+                        <div>
+                            <h:selectOneMenu styleClass="element select medium" value="#{buscarImpuestoBaseBean.anioGravable}">
+                                <f:selectItems value="#{buscarImpuestoBaseBean.anios}"/>
+                            </h:selectOneMenu>
+                        </div> 
+                    </li>
+                    
+
+                    <li class="buttons">
+                        <h:commandButton action="#{buscarImpuestoBaseBean.obtenerImpuestos()}" value="Buscar"/>
+                    </li>
+                </ul>
+                <h:outputText escape="false" value="#{buscarImpuestoBaseBean.tableOut}"/>
+            </h:form>	
+           <div align="center">  <br/><br/>
+                <a href="index.jsf">Volver al Inicio</a> <br/><br/></div>
+        </div>
+        <img id="bottom" src="public/bottom.png" alt=""/>
+
+
+    </ui:define>
+
+</ui:composition>

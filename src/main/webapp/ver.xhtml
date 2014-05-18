@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="template.jsp"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+
+         
+            
+        
+        <img id="top" src="public/top.png" alt=""/>
+        <div id="form_container">
+
+            <h1>Comprobante de Pago</h1>
+
+            <h:form styleClass="appnitro">
+
+                <ul >
+                   
+                    <li class="section_break">
+                        <h2>Detalles del Impuesto Base</h2>
+                        <p></p>
+                    </li>		
+                    <li id="li_7" >
+                        <label class="description" for="element_7">Código </label>
+                        <div>
+                            <h:outputText styleClass="element text medium" value="#{verImpuestoBaseBean.idImpuesto}"/>
+
+
+
+                        </div> 
+                    </li>		
+                    <li id="li_8" >
+                        <label class="description" for="element_8">Año Gravable </label>
+                        <div>
+                            <h:outputText styleClass="element text medium" value="#{verImpuestoBaseBean.anioGravable}"/>
+                        </div> 
+                    </li>
+                    <li id="li_22" >
+                        <label class="description" for="element_2">Placa </label>
+                        <div>
+                            <h:outputText styleClass="element text medium" value="#{verImpuestoBaseBean.placa}"/>
+
+                        </div> 
+                    </li>
+                    <li id="li_9" >
+                        <label class="description" for="element_9">Total a Pagar: </label>
+                        <div>
+                            <table>
+                                <tr><td>Base:</td><td align="center"><h:outputText styleClass="element text medium" value="#{verImpuestoBaseBean.base}"/></td><td></td></tr>
+                                <tr><td>Descuento:</td><td align="center"><h:outputText styleClass="element text medium" value="#{verImpuestoBaseBean.descuento}"/></td><td></td></tr>
+                                <tr><td><b>Total:</b></td><td align="center"><b>$<h:outputText value="#{verImpuestoBaseBean.total}"/></b></td><td></td></tr>
+
+
+                            </table>
+
+
+
+
+                        </div> 
+                    </li>		
+
+                    <li id="li_222" >
+                        <label class="description" for="element_2">Estado: </label>
+                        <div>
+                            <h2><h:outputText styleClass="element text medium" value="#{verImpuestoBaseBean.pagadoString}"/></h2>
+
+                        </div> 
+                    </li>
+                    
+                </ul>
+
+            </h:form>	
+            <div align="center">  <br/><br/>
+                <a href="index.jsf">Volver al Inicio</a> <br/><br/></div>
+        </div>
+        <img id="bottom" src="public/bottom.png" alt=""/>
+
+
+    </ui:define>
+
+</ui:composition>
