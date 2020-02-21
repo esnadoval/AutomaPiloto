@@ -6,8 +6,7 @@
 trigger:
 - staging-ci
 
-pool:
-  vmImage: 'Ubuntu-16.04'
+pool: Default
 
 steps:
 - task: Maven@3
